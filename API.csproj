@@ -45,6 +45,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0-alpha.2" />
+    <PackageReference Include="Shinetech.Common" Version="1.0.0" />
+    <PackageReference Include="Shinetech.Infrastructure.Contract" Version="1.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="5.6.3" />
   </ItemGroup>
@@ -53,15 +55,6 @@
     <None Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Shinetech.Common">
-      <HintPath>..\Shinetech.Common\bin\Release\net5.0\Shinetech.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Shinetech.Infrastructure.Contract">
-      <HintPath>..\Shinetech.Infrastructure.Contract\bin\Release\net5.0\Shinetech.Infrastructure.Contract.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
