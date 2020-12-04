@@ -1,8 +1,10 @@
-﻿using System;
+﻿using API.Models;
+using API.Models.RequestModel;
+using API.Models.ViewModel;
+using Shinetech.Infrastructure.Contract;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using API.Models;
-using Shinetech.Infrastructure.Contract;
 
 namespace API.Interfaces
 {

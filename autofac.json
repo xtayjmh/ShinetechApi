@@ -1,0 +1,10 @@
+﻿{
+  "modules": [
+    //{
+    //  "type": "Ensurance.Infrastructure.EF.RepositoryModule, Ensurance.Infrastructure.EF"
+    //},
+    {
+      "type": "API.Services.ServiceModule, API.Services"
+    }
+  ]
+}

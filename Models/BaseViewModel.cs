@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace API.Models
+namespace API.Models.ViewModel
 {
     /// <summary>
     /// 视图对象基类
@@ -36,5 +36,7 @@ namespace API.Models
         /// 是否删除
         /// </summary>
         public bool IsDelete { get; set; } = false;
+
+        public int Status { get; set; }
     }
 }

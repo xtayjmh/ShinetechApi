@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using API.Controllers;
+﻿using API.Controllers;
 using API.Models;
+using API.Models.RequestModel;
+using API.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Shinetech.Common;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace API.Core
 {
@@ -33,7 +34,7 @@ namespace API.Core
             {
                 var name = viewModel.Name.Replace("ViewModel", "");
 
-                var dataModel = entityAssembly.GetType($"{modelNamespace}.{"Data"}.{name}");
+                var dataModel = entityAssembly.GetType($"{modelNamespace}.{name}");
                 var requestModel = requestModelAssembly.GetType($"{requestNamespace}.{name}{"Request"}");
                 if (dataModel != null && requestModel != null)
                 {

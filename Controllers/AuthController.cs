@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using API.Auth;
+using API.Interfaces;
+using API.Models.RequestModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
-using API.Auth;
-using API.Interfaces;
-using API.Models.Request;
 
 namespace API.Controllers
 {
@@ -14,11 +14,11 @@ namespace API.Controllers
     /// </summary>
     [Produces("application/json")]
     [Route("[controller]")]
-    [TunnelClientAuth]
+    [APIAuthAttribute]
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
-        private IHttpContextAccessor _accessor;
+        private readonly IHttpContextAccessor _accessor;
 
         public AuthController(IConfiguration configuration, IAuthService accountService, IHttpContextAccessor accessor)
         {

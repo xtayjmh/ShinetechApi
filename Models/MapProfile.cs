@@ -1,11 +1,13 @@
-﻿using System;
-using System.Linq;
-// using AutoMapper;
+﻿using API.Models.RequestModel;
+using API.Models.ViewModel;
+using AutoMapper;
 using Shinetech.Infrastructure.Contract;
+using System;
+using System.Linq;
 
 namespace API.Models
 {
-    public class MapProfile// : Profile
+    public class MapProfile : Profile
     {
         /// <summary>
         /// 
@@ -25,21 +27,21 @@ namespace API.Models
             foreach (var entity in entityAssembly.GetTypes().Where(a => a.BaseType == typeof(BaseEntity)))
             {
                 var viewModel = viewModelAssembly.GetType($"{modelNamespace}.{entity.Name}ViewModel");
-                // if (viewModel != null)
-                // {
-                //     CreateMap(entity, viewModel);
-                //     CreateMap(viewModel, entity);
-                //
-                //     var pageEntity = Activator.CreateInstance((typeof(PaginatedList<>).MakeGenericType(entity)));
-                //     var pageViewModel = Activator.CreateInstance((typeof(PaginatedList<>).MakeGenericType(viewModel)));
-                //     CreateMap(pageEntity.GetType(), pageViewModel.GetType()).ReverseMap();
-                // }
-                //
-                // var requestModel = requestModelAssembly.GetType($"{requestNamespace}.{entity.Name}Request");
-                // if (requestModel != null)
-                // {
-                //     CreateMap(requestModel, entity);
-                // }
+                if (viewModel != null)
+                {
+                    CreateMap(entity, viewModel);
+                    CreateMap(viewModel, entity);
+
+                    var pageEntity = Activator.CreateInstance((typeof(PaginatedList<>).MakeGenericType(entity)));
+                    var pageViewModel = Activator.CreateInstance((typeof(PaginatedList<>).MakeGenericType(viewModel)));
+                    CreateMap(pageEntity.GetType(), pageViewModel.GetType()).ReverseMap();
+                }
+
+                var requestModel = requestModelAssembly.GetType($"{requestNamespace}.{entity.Name}RequestModel");
+                if (requestModel != null)
+                {
+                    CreateMap(requestModel, entity);
+                }
             }
         }
     }

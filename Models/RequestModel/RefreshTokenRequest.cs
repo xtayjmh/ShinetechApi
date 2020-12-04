@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API.Models.Request
+namespace API.Models.RequestModel
 {
     public class RefreshTokenRequest
     {

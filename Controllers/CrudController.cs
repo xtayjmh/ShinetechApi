@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API.Auth;
+using API.Interfaces;
+using API.Models;
+using API.Models.RequestModel;
+using API.Models.ViewModel;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shinetech.Common;
+using Shinetech.Infrastructure.Contract;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using API.Auth;
-using API.Interfaces;
-using API.Models;
-using Shinetech.Common;
-using Shinetech.Infrastructure.Contract;
 
 namespace API.Controllers
 {
@@ -16,7 +18,7 @@ namespace API.Controllers
     ///  
     /// </summary>
     /// <typeparam name="TableModel"></typeparam>
-    [TunnelClientAuth]
+    [APIAuthAttribute]
     [Produces("application/json")]
     public class CrudController<TableModel, PageView, PageInput> : Controller where TableModel : BaseEntity where PageView : BaseViewModel where PageInput : BaseRequestModel
     {
@@ -118,7 +120,7 @@ namespace API.Controllers
         ///     }
         /// </remarks>
         [HttpPost("Search")]
-        [TunnelClientAuth]
+        [APIAuthAttribute]
         public virtual async Task<PaginatedList<PageView>> Search([FromBody] PaginatedSearchRequest paginatedSearchRequest)
         {
             if (string.IsNullOrEmpty(paginatedSearchRequest.OrderBy))
@@ -130,7 +132,7 @@ namespace API.Controllers
         }
 
         [HttpPost("ExcelFile")]
-        [TunnelClientAuth]
+        [APIAuthAttribute]
         public IActionResult GetExcelFile([FromBody] PaginatedSearchRequest paginatedSearchRequest)
         {
             var dataList = _service.GetAll(paginatedSearchRequest.PageIndex, paginatedSearchRequest.PageSize, paginatedSearchRequest.Search, paginatedSearchRequest.OrderBy, paginatedSearchRequest.OrderByAscent);
@@ -149,7 +151,7 @@ namespace API.Controllers
         /// <param name="id">要删除的Id</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        [TunnelClientAuth]
+        [APIAuthAttribute]
         public virtual CommonResponse Delete(string id)
         {
             try
@@ -200,7 +202,7 @@ namespace API.Controllers
         /// <param name="updateModel">要更新的实体类</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        [TunnelClientAuth]
+        [APIAuthAttribute]
         public virtual CommonResponse Update([FromBody] PageInput updateModel, int id)
         {
             updateModel.Id = id;
@@ -240,7 +242,7 @@ namespace API.Controllers
         /// <param name="id">指定的记录Id</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        [TunnelClientAuth]
+        [APIAuthAttribute]
         public virtual PageView Get(int id)
         {
             return _service.GetOne(id);
@@ -252,7 +254,7 @@ namespace API.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("firstOne")]
-        [TunnelClientAuth]
+        [APIAuthAttribute]
         public virtual PageView FirstOne()
         {
             return _service.GetFirstDefault();
@@ -263,7 +265,7 @@ namespace API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetMaxId")]
-        [TunnelClientAuth]
+        [APIAuthAttribute]
         public virtual int GetMaxId()
         {
             return _service.GetMaxId();
@@ -275,7 +277,7 @@ namespace API.Controllers
         /// <param name="addModel">新增实体类</param>
         /// <returns></returns>
         [HttpPost]
-        [TunnelClientAuth]
+        [APIAuthAttribute]
         public virtual CommonResponse Add([FromBody] PageInput addModel)
         {
             var result = _service.Add(addModel);
@@ -297,7 +299,7 @@ namespace API.Controllers
         /// <param name="addModels">批量新增</param>
         /// <returns></returns>
         [HttpPost("Batch")]
-        [TunnelClientAuth]
+        [APIAuthAttribute]
         public virtual CommonResponse BatchAdd([FromBody] List<PageInput> addModels)
         {
             var result = _service.BatchAdd(addModels);
@@ -384,7 +386,7 @@ namespace API.Controllers
         ///        ]
         /// </remarks>
         [HttpPost("Exists")]
-        [TunnelClientAuth]
+        [APIAuthAttribute]
         public CommonResponse Exists([FromBody] List<SearchCondition> checkKeyValues)
         {
             var existsId = _service.Exists(checkKeyValues);

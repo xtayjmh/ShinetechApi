@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using System;
 
 namespace API.Auth
 {
@@ -22,7 +22,7 @@ namespace API.Auth
 
             Endpoint endpoint = (Endpoint)context.Resource;
 
-            TunnelClientAuth authAttribute = endpoint.Metadata.GetMetadata<TunnelClientAuth>();
+            APIAuthAttribute authAttribute = endpoint.Metadata.GetMetadata<APIAuthAttribute>();
 
             if (authAttribute is object) //checks that it actually found the attribute
             {
