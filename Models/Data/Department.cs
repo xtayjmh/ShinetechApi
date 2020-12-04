@@ -1,4 +1,6 @@
-﻿namespace API.Models.Data
+﻿using System.Text.Json;
+
+namespace API.Models.Data
 {
     /// <summary>
     /// 部门
@@ -28,7 +30,7 @@
         public string Remark { get; set; }
         public override string GetEntityName()
         {
-            return "部门" + Newtonsoft.Json.JsonConvert.SerializeObject(this);
+            return "部门" + JsonSerializer.Serialize(this);
         }
     }
 }

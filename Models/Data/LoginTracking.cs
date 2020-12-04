@@ -8,7 +8,7 @@
         /// <summary>
         /// IP地址
         /// </summary>
-        public string IP { get; set; }
+        public string Ip { get; set; }
         /// <summary>
         /// 失败次数
         /// </summary>
@@ -16,7 +16,7 @@
         /// <summary>
         /// 验证码
         /// </summary>
-        public string ValidateionCode { get; set; }
+        public string ValidationCode { get; set; }
 
     }
 }

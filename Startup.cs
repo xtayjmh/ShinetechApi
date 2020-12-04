@@ -67,8 +67,8 @@ namespace API
                         logging => logging
                             .AddConsole()
                             .AddFilter(level => level >= LogLevel.Information)))
-                .UseMySql(connecttext,new MySqlServerVersion(new Version(8, 0, 20)), mySqlOptions =>
-                    mySqlOptions.EnableRetryOnFailure()
+                .UseMySql(connecttext, new MySqlServerVersion(new Version(8, 0, 20)), mySqlOptions =>
+                     mySqlOptions.EnableRetryOnFailure()
                 ), ServiceLifetime.Transient);
             services.AddTransient<DbContext>(provider => provider.GetService<GeneralDbContext>());
 
@@ -84,8 +84,7 @@ namespace API
                 options.ModelMetadataDetailsProviders.Add(new RequiredBindingMetadataProvider());
             }
                 ).ConfigureApplicationPartManager(m =>
-                    m.FeatureProviders.Add(new GenericTypeControllerFeatureProvider()))
-                .AddNewtonsoftJson();
+                    m.FeatureProviders.Add(new GenericTypeControllerFeatureProvider()));
 
             // Swagger config
             services.AddSwaggerGen(c =>
@@ -179,7 +178,7 @@ namespace API
 
         public virtual void ConfigureContainer(ContainerBuilder builder)
         {
-            
+
             builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(API.Services.AuthService)))
                .Where(t => t.IsAssignableTo<API.Interfaces.IService>())
                .AsImplementedInterfaces()

@@ -67,10 +67,10 @@ namespace API.Services
             logRepository.Save();
 
 
-            var existsTracking = _trackingRepository.DbSet.FirstOrDefault(r => r.IP == ip);
+            var existsTracking = _trackingRepository.DbSet.FirstOrDefault(r => r.Ip == ip);
             if (existsTracking != null)
             {
-                if (existsTracking.FailedCount >= 3 && (validationCode != existsTracking.ValidateionCode || string.IsNullOrEmpty(validationCode)))
+                if (existsTracking.FailedCount >= 3 && (validationCode != existsTracking.ValidationCode || string.IsNullOrEmpty(validationCode)))
                 {
                     return new CommonResponse()
                     {
@@ -81,9 +81,9 @@ namespace API.Services
             }
             else
             {
-                _trackingRepository.DbSet.Add(new LoginTracking() { IP = ip, FailedCount = 0, ValidateionCode = "" });
+                _trackingRepository.DbSet.Add(new LoginTracking() { Ip = ip, FailedCount = 0, ValidationCode = "" });
                 _trackingRepository.Save();
-                existsTracking = _trackingRepository.DbSet.FirstOrDefault(r => r.IP == ip);
+                existsTracking = _trackingRepository.DbSet.FirstOrDefault(r => r.Ip == ip);
             }
             var loginAccount = _accountRepository.Get(r => r.LoginName == userName && !r.IsDelete && !r.IsEnable).FirstOrDefault();
             if (loginAccount != null)
@@ -125,19 +125,19 @@ namespace API.Services
         }
         public string GetValidationCode(string ip)
         {
-            var existsTracking = _trackingRepository.DbSet.FirstOrDefault(r => r.IP == ip);
+            var existsTracking = _trackingRepository.DbSet.FirstOrDefault(r => r.Ip == ip);
             if (existsTracking == null)
             {
-                _trackingRepository.DbSet.Add(new LoginTracking() { IP = ip, FailedCount = 0, ValidateionCode = "" });
+                _trackingRepository.DbSet.Add(new LoginTracking() { Ip = ip, FailedCount = 0, ValidationCode = "" });
                 _trackingRepository.Save();
-                existsTracking = _trackingRepository.DbSet.FirstOrDefault(r => r.IP == ip);
+                existsTracking = _trackingRepository.DbSet.FirstOrDefault(r => r.Ip == ip);
             }
             if (existsTracking.FailedCount < 3)
             {
                 return "";
             }
             var code = ValidationCode.GetRandomString(4);
-            existsTracking.ValidateionCode = code;
+            existsTracking.ValidationCode = code;
             _trackingRepository.Save();
             return "data:image/jpg;base64," + Convert.ToBase64String(ValidationCode.GetVcodeImg(code));
         }

@@ -131,7 +131,7 @@ namespace API.Migrations
                     b.Property<DateTime>("UpdatedTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("ValidateionCode")
+                    b.Property<string>("ValidationCode")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");

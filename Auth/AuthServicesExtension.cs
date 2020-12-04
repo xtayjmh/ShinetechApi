@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using Shinetech.Common;
 using System;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace API.Auth
@@ -65,7 +65,7 @@ namespace API.Auth
                 {
                     context.Response.ContentType = "application/json";
                     context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    await context.Response.WriteAsync(JsonConvert.SerializeObject(new CommonResponse() { code = (int)ResponseCode.Unauthorized }));
+                    await context.Response.WriteAsync(JsonSerializer.Serialize(new CommonResponse() { code = (int)ResponseCode.Unauthorized }));
                 }
                 context.HandleResponse();
             }
@@ -75,7 +75,7 @@ namespace API.Auth
                 if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
                 {
                     context.Response.ContentType = "application/json";
-                    context.Response.WriteAsync(JsonConvert.SerializeObject(new CommonResponse() { code = (int)ResponseCode.TokenExpired }));
+                    context.Response.WriteAsync(JsonSerializer.Serialize(new CommonResponse() { code = (int)ResponseCode.TokenExpired }));
                 }
                 return Task.CompletedTask;
             }
@@ -84,7 +84,7 @@ namespace API.Auth
             {
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(new CommonResponse() { code = (int)ResponseCode.Forbidden, message = "You are not authorised to perform this action" }));
+                await context.Response.WriteAsync(JsonSerializer.Serialize(new CommonResponse() { code = (int)ResponseCode.Forbidden, message = "You are not authorised to perform this action" }));
             }
 
             Task handleJWTTokenValidated(TokenValidatedContext context)
