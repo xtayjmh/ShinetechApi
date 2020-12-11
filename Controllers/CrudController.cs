@@ -65,7 +65,7 @@ namespace API.Controllers
         /// <returns></returns>
         /// <remarks>
         /// Operation取值：
-        /// 0:等于,1:不等于,2:大于,3:小于,4:大于等于,5:小于等于,6:包含
+        /// 0:等于,1:不等于,2:大于,3:小于,4:大于等于,5:小于等于,6:包含,7:日期当天
         /// 
         /// 
         /// Relationship取值：
@@ -118,6 +118,20 @@ namespace API.Controllers
         ///     
         ///             }]
         ///     }
+        ///
+        /// 查询签订日期为2020-12-08的数据，operation用7，value为字符串的日期格式：
+        /// 
+        ///
+        ///     {
+        ///         "pageIndex": 1,
+        ///         "pageSize": 10,
+        ///         "search": [{
+        ///             "key": "signingDate",
+        ///             "value": "2020-12-08",
+        ///             "operation": 7
+        ///         }]
+        ///     }
+        /// 
         /// </remarks>
         [HttpPost("Search")]
         [APIAuthAttribute]

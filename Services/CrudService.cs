@@ -267,6 +267,7 @@ namespace API.Services
                     }
 
                     Expression columnValue = null;
+                    Expression columnValue2 = null;
                     object objSearchValue = keyword.Value;
                     Type columnType = columnNameProperty.Type;
                     bool isNullable = false;
@@ -333,6 +334,7 @@ namespace API.Services
                     }
 
                     Expression e1 = null;
+                    Expression e2 = null;
 
                     switch (keyword.Operation)
                     {
@@ -365,6 +367,10 @@ namespace API.Services
                                 e1 = Expression.Call(columnNameProperty, method, columnValue);
                             }
                             break;
+                        case ConditionOperation.BetweenAnd:
+                            e1 = Expression.GreaterThanOrEqual(columnNameProperty, columnValue);
+                            e2 = Expression.LessThanOrEqual(columnNameProperty, columnValue2);
+                            break;
                         default:
                             break;
                     }
@@ -372,6 +378,10 @@ namespace API.Services
                     if (combined == null)
                     {
                         combined = e1;
+                        if (e1 != null && e2 != null && keyword.Operation == ConditionOperation.BetweenAnd)
+                        {
+                            combined = Expression.AndAlso(e1, e2);
+                        }
                     }
                     else
                     {
